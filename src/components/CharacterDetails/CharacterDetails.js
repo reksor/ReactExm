@@ -1,11 +1,34 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-const CharacterDetails=({characters})=>{
-    const {characterId}=useParams();
+const CharacterDetails=({
+    characters,
+    addComment,
+    })=>{
+    const {characterId} = useParams();
+    const [comment, setComment] = useState({
+        username: '',
+        comment: '',
+    });
 
     const character=characters.find(x=>x._id == characterId)
+
+    const addCommentHandler=(e)=>{
+        e.preventDefault();
+        const result=`${comment.username}: ${comment.comment}`;
+
+        addComment(characterId, result);
+    }
+
+    const onChange=(e)=>{
+        setComment(state=>({
+            ...state,
+            [e.target.name]:e.target.value
+        }))
+    }
 
     return(
         <section id="game-details">
@@ -25,15 +48,17 @@ const CharacterDetails=({characters})=>{
           <h2>Comments:</h2>
           <ul>
             {/* list all comments for current game (If any) */}
-            <li className="comment">
-              <p>Content: I rate this one quite highly.</p>
-            </li>
-            <li className="comment">
-              <p>Content: The best game.</p>
-            </li>
+            {character.comments?.map(x=>
+                <li className="comment">
+                    <p>{x}</p>
+                </li>
+            )}
           </ul>
+
+          {!character.comments &&
+          <p className="no-comment">No comments.</p>}
           {/* Display paragraph: If there are no games in the database */}
-          <p className="no-comment">No comments.</p>
+          
         </div>
         {/* Edit/Delete buttons ( Only for creator of this game )  */}
         <div className="buttons">
@@ -49,16 +74,24 @@ const CharacterDetails=({characters})=>{
       Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
       <article className="create-comment">
         <label>Add new comment:</label>
-        <form className="form">
+        <form className="form" onSubmit={addCommentHandler}>
+            <input 
+            type="text"
+            name="username"
+            placeholder="John Doe"
+            onChange={onChange}
+            value={comment.username}/>
+
           <textarea
             name="comment"
             placeholder="Comment......"
-            defaultValue={""}
+            onChange={onChange}
+            value={comment.comment}
           />
           <input
             className="btn submit"
             type="submit"
-            defaultValue="Add Comment"
+            value="Add Comment"
           />
         </form>
       </article>

@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { Link } from "react-router-dom";
+
 const LatestCharacter=({
     character
 })=>{
@@ -16,9 +18,9 @@ const LatestCharacter=({
             <span>☆</span>
           </div>
           <div className="data-buttons">
-            <a href="#" className="btn details-btn">
+            <Link to={`/characters/${character._id}`} className="btn details-btn">
               Details
-            </a>
+            </Link>
           </div>
         </div>
     )

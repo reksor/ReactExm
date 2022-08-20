@@ -17,6 +17,20 @@ import './App.css';
 
 function App() {
   const [characters, setComics]=useState([]);
+
+  const addComment=(characterId, comment)=>{
+    setComics(state=>{
+      const character =state.find(x=>x._id == characterId)
+
+      const comments=character.comments || [];
+      comments.push(comment)
+
+      return [
+        ...state.filter(x => x._id !== characterId),
+        {...character, comments},
+      ]
+    })
+  }
   
     useEffect(()=>{
       comicService.getAll()
@@ -37,7 +51,7 @@ function App() {
       <Route path="/register" element={<Register/>}/>
       <Route path="/create" element={<Create/>}/>
       <Route path="/characters" element={<CharactersList characters={characters}/>}/>
-      <Route path="/characters/:characterId" element={<CharacterDetails characters={characters} />}/>
+      <Route path="/characters/:characterId" element={<CharacterDetails characters={characters} addComment={addComment}/>}/>
     </Routes>
       
     {/* Login Page ( Only for Guest users ) */}
