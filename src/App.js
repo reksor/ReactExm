@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useNavigate} from 'react-router-dom'
 import { useEffect,useState } from "react"
+import uniqid from 'uniqid'
 
 import * as comicService from './services/comicsService'
 import Home from './components/Home/Home';
@@ -17,6 +20,7 @@ import './App.css';
 
 function App() {
   const [characters, setComics]=useState([]);
+  const navigate= useNavigate();
 
   const addComment=(characterId, comment)=>{
     setComics(state=>{
@@ -31,6 +35,18 @@ function App() {
       ]
     })
   }
+
+  const addCharacterHandler=(characterData)=>{
+    setComics(state =>[
+      ...state,
+      {
+        ...characterData,
+        _id: uniqid(),
+      },
+    ]);
+
+    navigate('/characters')
+  };
   
     useEffect(()=>{
       comicService.getAll()
@@ -49,7 +65,7 @@ function App() {
       <Route path="/" element={<Home characters={characters}/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
-      <Route path="/create" element={<Create/>}/>
+      <Route path="/create" element={<Create addCharacterHandler={addCharacterHandler}/>}/>
       <Route path="/characters" element={<CharactersList characters={characters}/>}/>
       <Route path="/characters/:characterId" element={<CharacterDetails characters={characters} addComment={addComment}/>}/>
     </Routes>

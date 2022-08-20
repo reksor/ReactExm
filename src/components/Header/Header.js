@@ -5,14 +5,14 @@ const Header=()=>{
         <header>
         <h1>
           <Link className="home" to="/">
-            GamesPlay
+            Home
           </Link>
         </h1>
         <nav>
           <Link to="/characters">Characters</Link>
           {/* Logged-in users */}
           <div id="user">
-            <Link to="/create">Create Game</Link>
+            <Link to="/create">Create Character</Link>
             <Link to="/logout">Logout</Link>
           </div>
           {/* Guest users */}

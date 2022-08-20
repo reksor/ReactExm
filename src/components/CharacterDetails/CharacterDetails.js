@@ -14,6 +14,11 @@ const CharacterDetails=({
         comment: '',
     });
 
+    const [error, setError]=useState({
+        username:'',
+        comment:'',
+    });
+
     const character=characters.find(x=>x._id == characterId)
 
     const addCommentHandler=(e)=>{
@@ -28,6 +33,16 @@ const CharacterDetails=({
             ...state,
             [e.target.name]:e.target.value
         }))
+    }
+
+    const validateUsername=(e)=>{
+        const username= e.target.value;
+        if(username.length < 4 || username.length > 15){
+            setError(state=>({
+                ...state,
+                username:'Username must be longer than 4 characters and shorter than 15'
+            }))
+        }
     }
 
     return(
@@ -80,7 +95,11 @@ const CharacterDetails=({
             name="username"
             placeholder="John Doe"
             onChange={onChange}
+            onBlur={validateUsername}
             value={comment.username}/>
+
+            {error.username&&
+            <div style={{color: "red"}}>{error.username}</div>}
 
           <textarea
             name="comment"
