@@ -1,19 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
-import { useEffect,useState } from "react"
-import * as comicService from '../../services/comicsService'
+
+
 import LatestCharacter from "./LatestCharacter/LatestCharacter";
 
 
-const Home=()=>{
-const [characters, setComics]=useState([]);
-
-useEffect(()=>{
-  comicService.getAll()
-  .then(result=>{
-    setComics(result)
-  })
-},[])
+const Home=({characters})=>{
 
     return(
         <section id="welcome-world">

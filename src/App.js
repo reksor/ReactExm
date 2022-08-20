@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
 import {Routes, Route} from 'react-router-dom'
+import { useEffect,useState } from "react"
 
+import * as comicService from './services/comicsService'
 import Home from './components/Home/Home';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
@@ -13,6 +15,15 @@ import CharactersList from './components/Characters/CharactersList';
 import './App.css';
 
 function App() {
+  const [characters, setComics]=useState([]);
+  
+    useEffect(()=>{
+      comicService.getAll()
+      .then(result=>{
+        setComics(result)
+      })
+    },[])
+  
   return (
     <div id="box">
       <Header/>
@@ -20,11 +31,11 @@ function App() {
     <main id="main-content"></main>
     {/*Home Page*/}
     <Routes>
-      <Route path="/" element={<Home/>}/>
+      <Route path="/" element={<Home characters={characters}/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
       <Route path="/create" element={<Create/>}/>
-      <Route path="/characters" element={<CharactersList/>}/>
+      <Route path="/characters" element={<CharactersList characters={characters}/>}/>
     </Routes>
       
     {/* Login Page ( Only for Guest users ) */}
