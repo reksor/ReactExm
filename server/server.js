@@ -1,8 +1,18 @@
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-eval */
+/* eslint-disable no-template-curly-in-string */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-mixed-operators */
+/* eslint-disable eqeqeq */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('http'), require('fs'), require('crypto')) :
         typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
             (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
 }(this, (function (http, fs, crypto) {
+    // eslint-disable-next-line strict
     'use strict';
 
     function _interopDefaultLegacy(e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -1333,7 +1343,7 @@
         }
     };
     var seedData = {
-        games: {
+        characters: {
             "ff436770-76c5-40e2-b231-77409eda7a61": {
                 "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
                 "title": "CoverFire",
